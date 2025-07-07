@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage.js";
 import { TataPlayAPI } from "./services/tataplay-api.js";
 import { StreamingService } from "./services/streaming.js";
-import { sendOtpSchema, verifyOtpSchema } from "@shared/schema";
+import { sendOtpSchema, verifyOtpSchema } from "@shared/schema.js";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {

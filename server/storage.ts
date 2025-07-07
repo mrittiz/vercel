@@ -5,7 +5,7 @@ import {
   type InsertSession, 
   type CachedUrl, 
   type InsertCachedUrl 
-} from "@shared/schema";
+} from "@shared/schema.js";
 
 export interface IStorage {
   // Session management
