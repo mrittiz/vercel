@@ -30,10 +30,10 @@ export class TataPlayAPI {
 
   static async registerGuestDevice(): Promise<DeviceCredentials> {
     const deviceId = this.generateNumericUuid();
-    
+
     try {
       console.log('Attempting device registration with deviceId:', deviceId);
-      
+
       const response = await fetch('https://tb.tapi.videoready.tv/binge-mobile-services/pub/api/v1/user/guest/register', {
         method: 'POST',
         headers: {
@@ -69,7 +69,7 @@ export class TataPlayAPI {
 
       const data = await response.json();
       console.log('Device registration response data:', data);
-      
+
       const anonymousId = data.data?.anonymousId;
 
       if (!anonymousId) {
@@ -91,7 +91,7 @@ export class TataPlayAPI {
   static async sendOTP(mobile: string, credentials: DeviceCredentials): Promise<string> {
     try {
       console.log('Attempting to send OTP for mobile:', mobile, 'with credentials:', credentials);
-      
+
       const response = await fetch('https://tb.tapi.videoready.tv/binge-mobile-services/pub/api/v1/user/authentication/generateOTP', {
         method: 'POST',
         headers: {
@@ -130,7 +130,7 @@ export class TataPlayAPI {
 
       const data = await response.json();
       console.log('OTP send response data:', data);
-      
+
       return data.message || 'OTP sent successfully';
     } catch (error) {
       console.error('OTP send error:', error);
@@ -165,7 +165,7 @@ export class TataPlayAPI {
     }
 
     const data = await response.json();
-    
+
     if (!data.data?.userAuthenticateToken) {
       throw new Error(data.message || 'OTP validation failed');
     }
@@ -202,7 +202,7 @@ export class TataPlayAPI {
   static async loginUser(mobile: string, token: string, deviceToken: string, credentials: DeviceCredentials, subscriberData: any): Promise<LoginData> {
     const accountDetails = subscriberData.data?.accountDetails?.[0] || {};
     const dthStatus = accountDetails.dthStatus || '';
-    
+
     let loginUrl = '';
     let loginBody: any = {};
 
