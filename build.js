@@ -1,9 +1,6 @@
 
 import { build } from 'vite';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-
-const execAsync = promisify(exec);
+import { build as esbuild } from 'esbuild';
 
 async function buildApp() {
   console.log('Building client...');
@@ -12,7 +9,16 @@ async function buildApp() {
   });
 
   console.log('Compiling server...');
-  await execAsync('npx tsc server/index.ts --outDir dist/server --target es2020 --module esnext --moduleResolution bundler --allowImportingTsExtensions false --declaration false --esModuleInterop true --skipLibCheck true');
+  await esbuild({
+    entryPoints: ['server/index.ts'],
+    bundle: true,
+    platform: 'node',
+    target: 'node18',
+    format: 'esm',
+    outfile: 'dist/index.js',
+    external: ['express', 'tsx'],
+    allowOverwrite: true
+  });
 
   console.log('Build complete!');
 }
